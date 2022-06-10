@@ -20,14 +20,7 @@ class RecordsSoundsViewController: UIViewController , AVAudioRecorderDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        print("viewDidLoad")
         updateRecordStatus(false)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("viewWillAppear")
     }
     
     @IBAction func recordAudio(_ sender: UIButton) {
@@ -58,7 +51,6 @@ class RecordsSoundsViewController: UIViewController , AVAudioRecorderDelegate{
     }
     
     //MARK: - Update Record status
-    
     func updateRecordStatus(_ recordStatus:Bool){
         stopRecordButton.isEnabled = recordStatus
         recordButton.isEnabled = !recordStatus
