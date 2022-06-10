@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 
 class RecordsSoundsViewController: UIViewController , AVAudioRecorderDelegate{
-
+    
     var audioRecorder: AVAudioRecorder!
     
     @IBOutlet weak var recordingLable: UILabel!
@@ -29,24 +29,24 @@ class RecordsSoundsViewController: UIViewController , AVAudioRecorderDelegate{
         super.viewWillAppear(animated)
         print("viewWillAppear")
     }
-
+    
     @IBAction func recordAudio(_ sender: UIButton) {
         
         updateRecordStatus(true)
         
         let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask, true)[0] as String
-            let pathArray = [dirPath, "recordedVoice.wav"]
-            let filePath = URL(string: pathArray.joined(separator: "/"))
+        let pathArray = [dirPath, "recordedVoice.wav"]
+        let filePath = URL(string: pathArray.joined(separator: "/"))
         
-
-            let session = AVAudioSession.sharedInstance()
-            try! session.setCategory(AVAudioSession.Category.playAndRecord, mode: AVAudioSession.Mode.default, options: AVAudioSession.CategoryOptions.defaultToSpeaker)
-
-            try! audioRecorder = AVAudioRecorder(url: filePath!, settings: [:])
+        
+        let session = AVAudioSession.sharedInstance()
+        try! session.setCategory(AVAudioSession.Category.playAndRecord, mode: AVAudioSession.Mode.default, options: AVAudioSession.CategoryOptions.defaultToSpeaker)
+        
+        try! audioRecorder = AVAudioRecorder(url: filePath!, settings: [:])
         audioRecorder.delegate = self
-            audioRecorder.isMeteringEnabled = true
-            audioRecorder.prepareToRecord()
-            audioRecorder.record()
+        audioRecorder.isMeteringEnabled = true
+        audioRecorder.prepareToRecord()
+        audioRecorder.record()
     }
     
     @IBAction func stopRecording(_ sender: UIButton) {
@@ -54,6 +54,9 @@ class RecordsSoundsViewController: UIViewController , AVAudioRecorderDelegate{
         audioRecorder.stop()
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(false)
+        
+    }
+    
     //MARK: - Update Record status
     
     func updateRecordStatus(_ recordStatus:Bool){
@@ -63,7 +66,6 @@ class RecordsSoundsViewController: UIViewController , AVAudioRecorderDelegate{
     }
     
     //MARK: - Audio Recorder Delegate
-    
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if flag {
             performSegue(withIdentifier: "stopRecording", sender: audioRecorder.url)
